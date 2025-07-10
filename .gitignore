@@ -1,0 +1,42 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Dependency directories
+/.pnp
+.pnp.js
+
+# Next.js build
+.next/
+/out/
+
+# NestJS build
+dist/
+*.tsbuildinfo
+
+# Prisma
+prisma/dev.db
+prisma/dev.db-journal
+prisma/migrations/
+
+# Env
+.env
+.env.*.local
+
+# Logs
+logs
+*.log
+*.log.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VSCode
+.vscode/
+
+#eslint
+coverage/

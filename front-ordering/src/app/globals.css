@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fff8f0;  /* 🍰 Soft cream white */
+  --foreground: #5c3a21;  /* 🍫 Chocolate brown text */
+  --accent: #ffb347;      /* 🍊 Mango orange for buttons/accents */
+  --muted: #ffecd2;        /* 🍮 Light peach for background sections */
+  --border: #ffd9b3;       /* 🍑 Light peach border */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #f5f0eb; /* 🌰 Light almond tone for dark mode */
+    --foreground: #311a0c; /* 🍫 Darker chocolate for better contrast */
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Arial', 'Helvetica', 'sans-serif';
+  line-height: 1.6;
+}
+
+/* Buttons */
+button {
+  background-color: var(--accent);
+  color: var(--foreground);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #ff9e30; /* 🍊 Deeper mango on hover */
+  transform: translateY(-3px);
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--foreground);
+  font-weight: 700;
+}
+
+/* Links */
+a {
+  color: #ff7f50; /* 🍑 Coral link */
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
