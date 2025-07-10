@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  dev-db:
+    image: postgres:17
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: FoodOrder
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Wjj02252003@
+    networks:
+      - jjnetwork
+networks:
+  jjnetwork:

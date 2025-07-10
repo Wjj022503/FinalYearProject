@@ -1,0 +1,140 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  email String @unique
+  hash String
+
+  UserName String?
+
+  cart Cart[]
+  order Order[]
+
+  @@map("users")
+}
+
+model Merchant{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  email String @unique
+  hash String
+
+  merchantName String
+  status Boolean @default(true)
+  ownerName String
+  phone String?
+
+  image String?
+
+  foods Food[]
+  order Order[]
+
+  @@map("merchants")
+}
+
+model Admin{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  email String @unique
+  hash String
+
+  adminName String
+
+  @@map("admins")
+}
+
+model Food{
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  name String
+  price Float
+  type String //food or drink
+  status Boolean @default(true)
+  image String? 
+
+  merchantID Int
+  merchant Merchant @relation(fields: [merchantID],references: [id])
+
+  orderItems OrderItem[]
+
+  @@map("foods")
+}
+
+model Cart {
+  id        Int      @id @default(autoincrement())
+  guestId   String?  // UUID if guest user
+  status    String   @default("active")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId    Int?     // FK if logged in user
+  user User? @relation(fields: [userId], references: [id])
+
+  cartItems CartItem[]
+
+  @@map("cart")
+}
+
+model CartItem {
+  id      Int     @id @default(autoincrement())
+  cartId  Int
+  foodId  Int
+  foodName String
+  quantity Int
+  priceAtTime Float
+  image String
+
+  cart    Cart   @relation(fields: [cartId], references: [id])
+}
+
+model Order {
+  id            Int           @id @default(autoincrement())
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  userId    Int
+  merchantId    Int
+  paymentMethod String
+  totalPrice    Float
+  status        String        @default("Pending")
+
+  user User @relation(fields: [userId], references: [id])
+  merchant Merchant @relation(fields: [merchantId], references: [id])
+  orderItems OrderItem[]
+
+  @@map("orders") // optional: map table name to 'orders'
+}
+
+model OrderItem {
+  id        Int      @id @default(autoincrement())
+  orderId   Int
+  foodId    Int
+  quantity  Int
+
+  order     Order    @relation(fields: [orderId], references: [id])
+  food      Food     @relation(fields: [foodId], references: [id])
+
+  @@map("order_items")
+}
