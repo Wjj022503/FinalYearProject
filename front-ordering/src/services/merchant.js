@@ -3,7 +3,7 @@ import axios from "axios"
 
 export async function addFood(foodData) {  
     try {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/food/add`, foodData,{
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/food/add`, foodData,{
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('merchant_access_token')}`
             },
@@ -23,7 +23,7 @@ export async function addFood(foodData) {
 export async function getAllFoods(merchantID) {
     try {
         const body = {merchantID:merchantID}
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/food/all`,body);
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/food/all`,body);
         return response.data;
     } catch (error) {
         console.error('Error fetching all foods:', error);
@@ -33,7 +33,7 @@ export async function getAllFoods(merchantID) {
 
 export async function deleteFood(id) {
     try{
-        const response = await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/food/${id}`);
+        const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL}/food/${id}`);
         return response.status;
     }
     catch (error) {
@@ -52,7 +52,7 @@ export async function updateFood(id, updatedData) {
         for (const [key, value] of Object.entries(updatedData)) {
             console.log(`${key}: ${value}`);
         }
-        const response = await axios.patch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/food/update/${id}`, updatedData,{
+        const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/food/update/${id}`, updatedData,{
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('merchant_access_token')}`
             },
@@ -72,7 +72,7 @@ export async function updateFood(id, updatedData) {
 
 export async function updateStatus(id, status) {
     try {
-        const response = await axios.patch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/merchant/update-status/${id}`, {status:status} ,{
+        const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/merchant/update-status/${id}`, {status:status} ,{
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('merchant_access_token')}`
             },
@@ -92,7 +92,7 @@ export async function updateStatus(id, status) {
 
 export async function getFoodsByMerchant(merchantId) {
     try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/food/merchant/${merchantId}`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/food/merchant/${merchantId}`);
         return response.data;
     }
     catch (error) {
@@ -103,7 +103,7 @@ export async function getFoodsByMerchant(merchantId) {
 
 export async function getAllOrders(merchantId) {
     try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/orders/merchant/${merchantId}`,{
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/orders/merchant/${merchantId}`,{
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('merchant_access_token')}`
             },
@@ -127,7 +127,7 @@ export async function getAllOrders(merchantId) {
 
 export async function updateOrderStatus(orderId, status) {
     try {
-        const response = await axios.patch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/orders/updateOrderStatus/${orderId}`, status,{
+        const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/orders/updateOrderStatus/${orderId}`, status,{
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('merchant_access_token')}`
             },        });
@@ -146,7 +146,7 @@ export async function getOrderHistory(merchantId){
     try{
         const token = localStorage.getItem('merchant_access_token');
         const res = await axios.get(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/merchant/history/${merchantId}`,
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/merchant/history/${merchantId}`,
             {
                 headers: { Authorization: `Bearer ${token}` },
             }

@@ -142,7 +142,7 @@ export default function AdminMerchantsPage() {
             key={merchant.id}
             className="rounded-xl p-4 shadow border border-[var(--accent)] bg-cover bg-center relative !text-white"
             style={{
-              backgroundImage: `url(${process.env.NEXT_PUBLIC_BACKEND_URL}${merchant.image})`,
+              backgroundImage: `url(${process.env.NEXT_PUBLIC_API_BASE_URL}${merchant.image})`,
               minHeight: '200px',
             }}
           >

@@ -19,7 +19,7 @@ export function CustomerSocketProvider({ children }) {
 
     if (!socketRef.current) {
       const token = localStorage.getItem('access_token');
-      socketRef.current = io(`${process.env.NEXT_PUBLIC_BACKEND_URL}/orders`, {
+      socketRef.current = io(`${process.env.NEXT_PUBLIC_API_BASE_URL}/orders`, {
         transports: ['websocket'],
         auth: {
           token,
@@ -49,7 +49,6 @@ export function CustomerSocketProvider({ children }) {
       });
       
       socketRef.current.on('orderReady', (order) => {
-          console.log('Your order is ready to pick up----------------------', order);
           toast.success(`Order #${order.id} is ready to pick up!`,{
             duration: 5000,
             style: {
@@ -66,6 +65,24 @@ export function CustomerSocketProvider({ children }) {
           });         
         }
       );
+
+      socketRef.current.on('orderCancelled', (order) => {
+          toast.error(`Order #${order.id} has been cancelled by merchant!`,{
+            duration: 5000,
+            style: {
+              borderRadius: '10px',
+              background: '#333',
+              color: '#ff0000',
+            }
+          });
+          //update order status in the list
+          setOrders(prevOrders => {
+            return prevOrders.map(o => 
+              o.id === order.id ? { ...o, status: order.status } : o
+            );
+          });         
+        }
+      );      
     }
 
     return () => {

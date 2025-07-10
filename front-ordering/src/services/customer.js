@@ -3,7 +3,7 @@ import axios from "axios"
 
 export async function getAvailableMerchants() {
     try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/merchant/available`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/merchant/available`);
         return response.data;
     } catch (error) {
         console.error('Error fetching merchants:', error);
@@ -13,7 +13,7 @@ export async function getAvailableMerchants() {
 
 export async function getAvailableFoods(merchantId){
     try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/food/available/${merchantId}`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/food/available/${merchantId}`);
         return response.data;
     } catch (error) {
         console.error('Error fetching foods:', error);
@@ -24,7 +24,7 @@ export async function getAvailableFoods(merchantId){
 export async function getCart(userId) {
     try {
         const token = localStorage.getItem('access_token');
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/current`, {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/current`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 userID: userId,
@@ -51,7 +51,7 @@ export async function addToCartDb(userId, foodData) {
 
     const token = localStorage.getItem('access_token');
     try {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/add/${userId}`, cleanedFoodData, {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/add/${userId}`, cleanedFoodData, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -72,7 +72,7 @@ export async function addToCartDb(userId, foodData) {
 export async function getCartItems(userId) {
     try {
         const token = localStorage.getItem('access_token');
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/all/${userId}`, {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/all/${userId}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -88,7 +88,7 @@ export async function removeFromCart(cartItemId) {
     try {
         console.log("Removing item with ID:", cartItemId);
         const token = localStorage.getItem('access_token');
-        const response = await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/delete/${cartItemId}`, {
+        const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/delete/${cartItemId}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -104,7 +104,7 @@ export async function removeAllFromCart(cartId) {
     try {
         console.log("Removing all items from cart with ID:", cartId);
         const token = localStorage.getItem('access_token');
-        const response = await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/all/${cartId}`, {
+        const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/all/${cartId}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -120,7 +120,7 @@ export async function updateCart(cartItemId, cartId, quantity) {
     try {
         console.log("Updating cart item with ID:", cartItemId, "CartId:", cartId,"to quantity:", quantity);
         const token = localStorage.getItem('access_token');
-        const response = await axios.patch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/cart/update/${cartItemId}`, { cartId, quantity }, {
+        const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/update/${cartItemId}`, { cartId, quantity }, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -135,7 +135,7 @@ export async function updateCart(cartItemId, cartId, quantity) {
 export async function createOrder(cartId, userId) {
     try {
         const token = localStorage.getItem('access_token');
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/order/create/${cartId}`, { userId }, {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/order/create/${cartId}`, { userId }, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -150,7 +150,7 @@ export async function createOrder(cartId, userId) {
 export async function getCustomerOrders(userId) {
     try {
         const token = localStorage.getItem('access_token');
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/orders/customer/${userId}`,{
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/orders/customer/${userId}`,{
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -166,7 +166,7 @@ export async function getMerchantByFoodId(foodId) {
     try {
         console.log("Fetching merchant by food ID:", foodId);
         const token = localStorage.getItem('access_token');
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/merchant/food/${foodId}`, {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/merchant/food/${foodId}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -181,7 +181,7 @@ export async function getMerchantByFoodId(foodId) {
 export async function changePassword(userId, newPassword) {
     try {
         const token = localStorage.getItem('access_token');
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/change-password`, { userId, newPassword }, {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/change-password`, { userId, newPassword }, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

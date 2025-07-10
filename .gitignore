@@ -24,7 +24,8 @@ prisma/migrations/
 
 # Env
 .env
-.env.*.local
+.env.production
+.github
 
 # Logs
 logs

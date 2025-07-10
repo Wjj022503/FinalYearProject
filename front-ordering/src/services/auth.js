@@ -5,7 +5,8 @@ axios.defaults.withCredentials = true;
 
 export async function signup(userData) {
     try {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/signup`, {
+        console.log("BACKEND URL:", process.env.NEXT_PUBLIC_API_BASE_URL);  // Added for debugging
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/signup`, {
             email: userData.email,
             password: userData.password,
             UserName: userData.name,
@@ -27,8 +28,9 @@ export async function signup(userData) {
 }
 
 export async function login(userData) {
-    try{ 
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, {
+    try{
+        console.log("BACKEND URL:", process.env.NEXT_PUBLIC_API_BASE_URL); 
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/login`, {
             email: userData.email,
             password: userData.password,
           });
@@ -48,8 +50,9 @@ export async function login(userData) {
 }
 
 export async function merchant_login(userData) {
-    try{ 
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/merchant/login`, {
+    try{
+        console.log("BACKEND URL:", process.env.NEXT_PUBLIC_API_BASE_URL);  // Added for debugging 
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/merchant/login`, {
             email: userData.email,
             password: userData.password,
           });
@@ -70,7 +73,7 @@ export async function merchant_login(userData) {
 
 export async function admin_login(userData) {
     try {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/admin/login`, {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/admin/login`, {
             email: userData.email,
             password: userData.password,
         });
@@ -89,7 +92,7 @@ export async function admin_login(userData) {
 
 export async function refreshAccessToken() {
     try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/refresh/customer`,{
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/refresh/customer`,{
                 withCredentials: true,
         });
         const newAccessToken = response.data.access_token;
@@ -104,7 +107,7 @@ export async function refreshAccessToken() {
 
 export async function refreshMerchantAccessToken() {
     try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/refresh/merchant`, {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/refresh/merchant`, {
                 withCredentials: true,
         });
         const newAccessToken = response.data.access_token;
@@ -121,7 +124,7 @@ export async function refreshMerchantAccessToken() {
 export async function getMe() {
     try {
         const token = localStorage.getItem('access_token');
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/customer/me`, {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/customer/me`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -136,7 +139,7 @@ export async function getMe() {
 export async function getMerchantMe() {
     try {
         const token = localStorage.getItem('merchant_access_token');
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/merchant/me`, {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/merchant/me`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -154,7 +157,7 @@ export async function getMerchantMe() {
 export async function getAdminMe() {
     try {
         const token = localStorage.getItem('admin_access_token');
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/admin/me`, {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/admin/me`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

@@ -60,7 +60,7 @@ export default function MenuPage() {
         <div key={food.id} className="bg-white rounded-xl shadow p-4 flex gap-4">
           <div className="w-24 h-24 relative">
             <Image
-              src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${food.image}`}
+              src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${food.image}`}
               alt={food.name}
               fill
               className="object-cover rounded-md"

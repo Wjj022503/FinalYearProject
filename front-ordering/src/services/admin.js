@@ -4,7 +4,7 @@ import axios from "axios"
 export async function addMerchant(merchantData) {
     try {
         const token = localStorage.getItem('admin_access_token');
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/merchant/add`, merchantData, {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/merchant/add`, merchantData, {
             headers: {
                 'Authorization': `Bearer ${token}`,
             }
@@ -27,7 +27,7 @@ export async function addMerchant(merchantData) {
 
 export async function getMerchants() {
     try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/merchant/all`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/merchant/all`);
         return response.data;
     } catch (error) {
         console.error('Error fetching merchants:', error);
@@ -38,7 +38,7 @@ export async function getMerchants() {
 export async function deleteMerchant(merchantId) {
     try {
         const token = localStorage.getItem('admin_access_token');
-        const response = await axios.delete(`${process.env.NEXT_PUBLIC_BACKEND_URL}/merchant/${merchantId}`,{
+        const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL}/merchant/${merchantId}`,{
             headers: {
                 'Authorization': `Bearer ${token}`,
             }
@@ -52,7 +52,7 @@ export async function deleteMerchant(merchantId) {
 
 export async function getMerchantById(merchantId) {
     try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/merchant/${merchantId}`);
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/merchant/${merchantId}`);
         return response.data;
     }
     catch (error) {
@@ -64,7 +64,7 @@ export async function getMerchantById(merchantId) {
 export async function updateMerchant(merchantId, updatedData) {
     try {
         const token = localStorage.getItem('admin_access_token');
-        const response = await axios.patch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/merchant/${merchantId}`, updatedData,{
+        const response = await axios.patch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/merchant/${merchantId}`, updatedData,{
             headers: {
                 'Authorization': `Bearer ${token}`,
             }

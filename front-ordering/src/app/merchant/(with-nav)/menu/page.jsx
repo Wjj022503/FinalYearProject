@@ -120,7 +120,7 @@ export default function MerchantMenuPage() {
           <div key={food.id} className="bg-white p-4 shadow rounded-xl border border-[var(--border)] text-center">
             <div className="w-full h-40 relative mb-2">
               <Image
-                src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${food.image}`}
+                src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${food.image}`}
                 alt={food.name}
                 fill
                 className="object-cover rounded-md"

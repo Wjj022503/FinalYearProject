@@ -47,7 +47,9 @@ export default function MerchantOrderHistory() {
                   <td className="p-4">{order.id}</td>
                   <td className="p-4">{order.user.UserName}</td>
                   <td className="p-4">RM {order.totalPrice.toFixed(2)}</td>
-                  <td className="p-4">{order.status}</td>
+                  <td className={`p-4 ${order.status == 'Cancelled' ? 'text-red-500' : ''}`}>
+                    {order.status}
+                  </td>
                   <td className="p-4">
                     {new Date(order.createdAt).toLocaleDateString('en-MY')}
                   </td>

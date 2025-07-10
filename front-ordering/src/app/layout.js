@@ -8,6 +8,10 @@ const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin']
 export const metadata = {
   title: 'APFood',
   description: 'Hungry? Order your food now!',
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+  }
 };
 
 export default function RootLayout({ children }) {

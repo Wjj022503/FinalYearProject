@@ -16,7 +16,7 @@ export function MerchantSocketProvider({ children }) {
   useEffect(() => {
     if (!socketRef.current) {
       const token = localStorage.getItem('merchant_access_token');
-      socketRef.current = io(`${process.env.NEXT_PUBLIC_BACKEND_URL}/orders`, {
+      socketRef.current = io(`${process.env.NEXT_PUBLIC_API_BASE_URL}/orders`, {
         transports: ['websocket'],
         auth: {
           token,

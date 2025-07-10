@@ -8,6 +8,7 @@ import { useCustomer } from '@/context/CustomerContext';
 
 export default function MerchantPage() {
   const [merchants, setMerchants] = useState([]);
+  const [showWaiterModal, setShowWaiterModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const {customer , loading} = useCustomer();
   const router = useRouter();
@@ -30,6 +31,12 @@ export default function MerchantPage() {
   const filteredMerchants = merchants.filter((merchant) =>
     merchant.merchantName.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleRequestSubmit = () => {
+    // Handle the request submission logic here
+    toast.success('Request sent to AI Waiter!');
+    setShowWaiterModal(false);
+  };  
 
   return (
     <div className="min-h-screen bg-[var(--background)] p-4">
@@ -63,7 +70,7 @@ export default function MerchantPage() {
             {/* Image background */}
             <div className="absolute inset-0 z-0">
               <Image
-                src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${merchant.image.startsWith('/') ? '' : '/'}${merchant.image}`}
+                src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${merchant.image.startsWith('/') ? '' : '/'}${merchant.image}`}
                 alt={merchant.merchantName}
                 fill
                 className="object-cover"
@@ -83,6 +90,43 @@ export default function MerchantPage() {
           </div>
         ))}
       </div>
+
+      <button
+        onClick={() => setShowWaiterModal(true)}
+        className="fixed bottom-6 right-6 bg-orange-500 hover:bg-orange-600 text-white !text-xl !rounded-full !w-16 !h-16 shadow-lg flex items-center justify-center z-50"
+      >
+        🤖
+      </button>
+      {showWaiterModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-lg w-11/12 max-w-md p-6 relative">
+            <button
+              onClick={() => setShowWaiterModal(false)}
+              className="absolute top-2 right-2 !text-gray-500 !hover:text-gray-700 !text-2xl !border-none !bg-transparent"
+            >
+              x
+            </button>
+            <h2 className="text-lg font-bold mb-4">Chat with AI Waiter</h2>
+            <div className="border rounded-md h-48 p-2 overflow-y-auto mb-4">
+              {/* Chat content goes here */}
+              <p className="text-gray-600">Hi! What kind of food are you craving?</p>
+            </div>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                placeholder="Type your request..."
+                className="flex-1 border rounded-md p-2"
+              />
+              <button
+                onClick={handleRequestSubmit}
+                className="bg-[var(--accent)] !hover:bg-orange-600 !text-black !rounded-md !px-4"
+              >
+                Send
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

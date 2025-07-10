@@ -10,7 +10,8 @@ import { useMerchantOrder } from '@/context/MerchantOrderContext';
 export default function MerchantOrdersPage() {
   const [search, setSearch] = useState('');
   const [showConfirmReady, setShowConfirmReady] = useState(false);
-  const [orderToMarkReady, setOrderToMarkReady] = useState(null);
+  const [showConfirmCancel, setShowConfirmCancel] = useState(false);
+  const [orderToUpdateStatus, setOrderToUpdateStatus] = useState(null);
   const { collapsed } = useSidebar();
   const { socket, ready } = useSocket();
   const { orders, setOrders } = useMerchantOrder();
@@ -72,6 +73,15 @@ export default function MerchantOrdersPage() {
                 </ul>
               </div>
             </div>
+            <button
+              onClick={() => {
+                setShowConfirmCancel(true);
+                setOrderToUpdateStatus(order);
+              }}
+              className="!mt-2 !p-2 !bg-red-400 !hover:bg-red-500 text-white !border-none !rounded-md font-semibold"
+            >
+              Cancel Order
+            </button>
             {order.status === 'Pending' && (
                 <button
                     onClick={() => handleUpdateStatus(order.id, 'Preparing')}
@@ -83,7 +93,7 @@ export default function MerchantOrdersPage() {
 
                 {order.status === 'Preparing' && (
                 <button
-                    onClick={() => {setShowConfirmReady(true); setOrderToMarkReady(order)}}
+                    onClick={() => {setShowConfirmReady(true); setOrderToUpdateStatus(order)}}
                     className="!mt-4 !p-2 !bg-green-400 !hover:bg-blue-500 text-white !border-none !rounded-md font-semibold"
                 >
                     Mark as Done
@@ -124,7 +134,7 @@ export default function MerchantOrdersPage() {
                 <button onClick={() => setShowConfirmReady(false)} className="!px-4 !py-2 !border-none rounded-md text-sm font-semibold">
                   Cancel
                 </button>
-                <button onClick={() => { handleUpdateStatus(orderToMarkReady.id,'Wait for Pickup'); setShowConfirmReady(false); }} className="!bg-green-500 !text-black !border-none !px-4 !py-2 rounded-md font-semibold">
+                <button onClick={() => { handleUpdateStatus(orderToUpdateStatus.id,'Wait for Pickup'); setShowConfirmReady(false); }} className="!bg-green-500 !text-black !border-none !px-4 !py-2 rounded-md font-semibold">
                   Confirm
                 </button>
               </div>
@@ -132,6 +142,37 @@ export default function MerchantOrdersPage() {
           </motion.div>
         )}
       </AnimatePresence>
+
+        {/* Confirm Cancel Modal */}
+      <AnimatePresence>
+        {showConfirmCancel && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              className="bg-white p-6 rounded-xl w-full max-w-sm shadow-xl text-center"
+            >
+              <h3 className="text-lg font-semibold text-[var(--foreground)] mb-4">
+                Are you sure you want to cancel this order?
+              </h3>
+              <div className="flex justify-center gap-4">
+                <button onClick={() => setShowConfirmCancel(false)} className="!px-4 !py-2 !border-none rounded-md text-sm font-semibold">
+                  No
+                </button>
+                <button onClick={() => { handleUpdateStatus(orderToUpdateStatus.id,'Cancelled'); setShowConfirmCancel(false); }} className="!bg-red-500 !text-black !border-none !px-4 !py-2 rounded-md font-semibold">
+                  Yes, Cancel
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>    
     </div>
   );
 }

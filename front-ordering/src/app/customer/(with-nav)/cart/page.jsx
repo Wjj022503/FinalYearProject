@@ -174,7 +174,7 @@ export default function CartPage() {
               {/* Image */}
               <div className="w-20 h-20 relative">
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${item.image}`}
+                  src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${item.image}`}
                   alt={item.name}
                   fill
                   className="object-cover rounded-md"
